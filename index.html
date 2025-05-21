@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acelerador de Ideias</title>
+<style>
+  /* Reset básico */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f3f6fa;
+    color: #0b1320;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 1.5rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 2.25rem;
+    letter-spacing: 0.05em;
+    color: #0b1320;
+  }
+  main {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  textarea {
+    width: 100%;
+    height: 160px;
+    padding: 1rem;
+    font-size: 1.125rem;
+    border-radius: 8px;
+    border: 2px solid #afc1d0;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: #1c3f60;
+    background: #e9f0f7;
+  }
+  button {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    background-color: #1c3f60;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover:not(:disabled) {
+    background-color: #0b253f;
+  }
+  button:disabled {
+    background-color: #afc1d0;
+    cursor: not-allowed;
+  }
+  #msg {
+    margin-top: 1.5rem;
+    font-size: 1.125rem;
+    color: #0b1320;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  #msg.show {
+    opacity: 1;
+  }
+  @media (max-width: 480px) {
+    body {
+      padding: 1rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+    }
+    textarea {
+      height: 140px;
+      font-size: 1rem;
+    }
+    button {
+      font-size: 1rem;
+      padding: 0.85rem;
+    }
+    #msg {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Acelerador de Ideias</h1>
+  </header>
+  <main>
+    <textarea id="ideaInput" placeholder="Conte sua ideia aqui..."></textarea>
+    <button id="sendBtn" disabled>Enviar</button>
+    <div id="msg"></div>
+  </main>
+<script>
+  const textarea = document.getElementById('ideaInput');
+  const button = document.getElementById('sendBtn');
+  const msg = document.getElementById('msg');
+
+  // Habilita botão só se tiver texto
+  textarea.addEventListener('input', () => {
+    button.disabled = textarea.value.trim().length === 0;
+    if (!button.disabled) {
+      msg.classList.remove('show');
+      msg.textContent = '';
+    }
+  });
+
+  // Ao clicar em enviar
+  button.addEventListener('click', () => {
+    button.disabled = true;
+    textarea.disabled = true;
+    msg.textContent = 'Enviando sua ideia...';
+    msg.classList.add('show');
+
+    // Simula processo assíncrono (ex: API)
+    setTimeout(() => {
+      msg.textContent = 'Ideia recebida! Em breve vamos ajudar a estruturá-la.';
+      textarea.value = '';
+      textarea.disabled = false;
+      button.disabled = true;
+      textarea.focus();
+    }, 1500);
+  });
+</script>
+</body>
+</html>
